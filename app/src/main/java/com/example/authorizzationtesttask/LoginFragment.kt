@@ -37,12 +37,12 @@ class LoginFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
 
         binding.loginButton.setOnClickListener {
-            val username = binding.login.text.toString()
+            val login = binding.login.text.toString()
             val password = binding.password.text.toString()
-            if (username.isEmpty() || password.isEmpty()) {
+            if (login.isEmpty() || password.isEmpty()) {
                 Toast.makeText(context, "Поля не должны быть пустыми", Toast.LENGTH_SHORT).show()
             } else {
-                viewModel.login(username, password)
+                viewModel.login(login, password)
             }
         }
 
@@ -50,7 +50,7 @@ class LoginFragment : Fragment() {
             if (isSuccess == "true") {
                 val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
                 val editor = sharedPref?.edit()
-                editor?.putString("token", "app-key")
+                editor?.putString("token", "Authorization")
                 editor?.apply()
                 findNavController().navigate(R.id.action_loginFragment_to_paymentsFragment)
             }

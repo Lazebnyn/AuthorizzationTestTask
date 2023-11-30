@@ -2,7 +2,6 @@ package com.example.authorizzationtesttask.repository
 
 import com.example.authorizzationtesttask.Data.ApiResponse
 import com.example.authorizzationtesttask.Data.LoginRequest
-import com.example.authorizzationtesttask.Data.Payment
 import com.example.authorizzationtesttask.network.ApiException
 
 import com.example.authorizzationtesttask.network.MyApi
@@ -10,8 +9,8 @@ import com.example.authorizzationtesttask.network.MyApi
 
 class MyRepository(private val myApi: MyApi) {
 
-    suspend fun login(username: String, password: String): ApiResponse {
-        val response = myApi.login(LoginRequest(username, password))
+    suspend fun login(login: String, password: String): ApiResponse {
+        val response = myApi.login(LoginRequest(login, password))
         if (response.success == "false") {
             throw ApiException(response.error.error_msg)
         }

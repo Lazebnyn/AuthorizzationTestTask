@@ -2,7 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/logout"
-        android:title="Выйти из системы"
+        android:title=""
+        android:icon="@drawable/baseline_exit_to_app_24"
         android:orderInCategory="100"
         app:showAsAction="always" />
 </menu>

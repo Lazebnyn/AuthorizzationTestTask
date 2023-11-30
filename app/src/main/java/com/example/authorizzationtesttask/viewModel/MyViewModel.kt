@@ -1,6 +1,7 @@
 package com.example.authorizzationtesttask.viewModel
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +12,7 @@ import com.example.authorizzationtesttask.network.ApiException
 import com.example.authorizzationtesttask.repository.MyRepository
 import kotlinx.coroutines.launch
 import kotlin.random.Random
-import com.example.authorizzationtesttask.Data.ApiResponse
-
+import com.example.authorizzationtesttask.Data.LoginRequest
 
 
 class MyViewModel(private val repository: MyRepository) : ViewModel() {
@@ -29,11 +29,15 @@ class MyViewModel(private val repository: MyRepository) : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
-    fun login(username: String, password: String) {
-        if (username == "demo" && password == "12345") {
+    fun login(login: String, password: String) {
+
+        if (login == "demo" && password == "12345") {
             viewModelScope.launch {
                 try {
-                    val response = repository.login(username, password)
+                    val response = repository.login(login, password)
+                    if (response.success == "false") {
+                        throw ApiException(response.error.error_msg)
+                    }
                     _loginResult.value =
                         if (response.success.isNotEmpty()) response.success else null
                 } catch (e: ApiException) {
